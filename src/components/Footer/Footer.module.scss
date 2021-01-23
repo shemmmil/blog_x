@@ -1,0 +1,14 @@
+.footer {
+  color: #b2bfd1;
+  & > small {
+    font-size: 16px;
+  }
+}
+
+.github {
+  color: #b2bfd1;
+
+  &:hover {
+    color: #486da2;
+  }
+}
