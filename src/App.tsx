@@ -1,14 +1,21 @@
 import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 import { Header, Footer } from "./components";
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <div className="App">
-      <Header />
-      <main className="main" />
-      <Footer />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <Header />
+        <main className="main" />
+        <Footer />
+      </div>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
