@@ -4,5 +4,7 @@ import { getPostById } from "../api";
 import { Post } from "../types";
 
 export const usePost = (postId: number) => {
-  return useQuery<Post, Error>(["post", postId], () => getPostById(postId), {});
+  return useQuery<Post, Error>(["post", postId], () => getPostById(postId), {
+    refetchOnWindowFocus: false,
+  });
 };
