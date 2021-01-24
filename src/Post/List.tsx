@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 
 import { Post } from "./Post";
 import { getPosts } from "./api/posts";
@@ -8,7 +9,10 @@ import styles from "./styles/List.module.scss";
 export const List = () => {
   const { status, data, isFetching, error } = useQuery<PostType[], Error>(
     "posts",
-    getPosts
+    getPosts,
+    {
+      staleTime: 1000 * 60,
+    }
   );
 
   if (status === "loading") {
@@ -25,7 +29,9 @@ export const List = () => {
         <ul className={styles.list}>
           {data.slice(0, 10).map((post) => (
             <li key={`post-${post.id}`} className={styles["list__item"]}>
-              <Post id={post.id} title={post.title} />
+              <Link to={`/post/${post.id}`} className={styles.link}>
+                <Post id={post.id} title={post.title} />
+              </Link>
             </li>
           ))}
         </ul>

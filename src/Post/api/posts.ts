@@ -1,6 +1,11 @@
-export const getPosts = async () => {
-  const URL = "https://jsonplaceholder.typicode.com/posts";
+const URL_POSTS = "https://jsonplaceholder.typicode.com/posts";
 
-  const response = await fetch(URL);
+export const getPosts = async () => {
+  const response = await fetch(URL_POSTS);
+  return response.json();
+};
+
+export const getPostById = async (id: number) => {
+  const response = await fetch(`${URL_POSTS}/${id}`);
   return response.json();
 };
