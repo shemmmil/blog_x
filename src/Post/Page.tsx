@@ -14,9 +14,14 @@ export const Page = ({ id }: { id: number }) => {
   return (
     <article>
       {data && (
-        <header>
-          <h1>{data.title}</h1>
-        </header>
+        <>
+          <header>
+            <h1>{data.title}</h1>
+          </header>
+          <section>
+            <p>{data.body}</p>
+          </section>
+        </>
       )}
       {isFetching && <div>Background Updating...</div>}
     </article>
