@@ -1,4 +1,5 @@
 import { usePost } from "./hooks";
+import { List as CommentList } from "../Comments";
 
 export const Page = ({ id }: { id: number }) => {
   const { status, data, isFetching, error } = usePost(id);
@@ -24,6 +25,7 @@ export const Page = ({ id }: { id: number }) => {
         </>
       )}
       {isFetching && <div>Background Updating...</div>}
+      <CommentList id={id} />
     </article>
   );
 };
