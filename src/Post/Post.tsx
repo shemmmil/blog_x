@@ -11,7 +11,7 @@ function capitalizeFirstLetter(string: string) {
 
 export const Post = ({ id, title }: PostProps) => {
   const titleCapitalize = capitalizeFirstLetter(title);
-  const { status, data, isFetching, error } = useComments(id);
+  const { data } = useComments(id);
 
   return (
     <article>
