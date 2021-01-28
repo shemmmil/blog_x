@@ -1,7 +1,14 @@
+import { lazy, Suspense } from "react";
+
+import commentIcon from "../components/icons/comments.svg";
 import { Post as PostType } from "./types";
 import styles from "./styles/Post.module.scss";
-import { useComments } from "../Comments/hooks";
-import commentIcon from "../components/icons/comments.svg";
+
+const Comments = lazy(() =>
+  import("./Comments").then((module) => ({
+    default: module.Comments,
+  }))
+);
 
 export type PostProps = Pick<PostType, "id" | "title">;
 
@@ -11,7 +18,6 @@ function capitalizeFirstLetter(string: string) {
 
 export const Post = ({ id, title }: PostProps) => {
   const titleCapitalize = capitalizeFirstLetter(title);
-  const { data } = useComments(id);
 
   return (
     <article>
@@ -20,17 +26,17 @@ export const Post = ({ id, title }: PostProps) => {
       </header>
       <footer>
         <section>
-          {data && (
-            <div className={styles.comments}>
-              <img
-                src={commentIcon}
-                height="16"
-                width="16"
-                alt="comments count"
-              />
-              <span className={styles.count}>{data.length}</span>
-            </div>
-          )}
+          <div className={styles.comments}>
+            <img
+              src={commentIcon}
+              height="16"
+              width="16"
+              alt="comments count"
+            />
+            <Suspense fallback="Загружаем комментария">
+              <Comments id={id} />
+            </Suspense>
+          </div>
         </section>
       </footer>
     </article>
