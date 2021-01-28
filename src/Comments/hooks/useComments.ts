@@ -9,6 +9,7 @@ export const useComments = (postId: number) => {
     () => getComments(postId),
     {
       refetchOnWindowFocus: false,
+      suspense: true,
     }
   );
 };

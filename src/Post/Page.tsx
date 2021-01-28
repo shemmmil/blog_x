@@ -1,31 +1,18 @@
+import { lazy, Suspense } from "react";
 import { usePost } from "./hooks";
 import { List as CommentList } from "../Comments";
 
+const Content = lazy(() =>
+  import("./components/Page").then((module) => ({ default: module.Content }))
+);
+
 export const Page = ({ id }: { id: number }) => {
-  const { status, data, isFetching, error } = usePost(id);
-
-  if (!id || status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "error") {
-    return <span>Error: {error?.message}</span>;
-  }
+  const { data } = usePost(id);
 
   return (
-    <article>
-      {data && (
-        <>
-          <header>
-            <h1>{data.title}</h1>
-          </header>
-          <section>
-            <p>{data.body}</p>
-          </section>
-        </>
-      )}
-      {isFetching && <div>Background Updating...</div>}
+    <Suspense fallback="Загружаем...">
+      <Content title={data?.title} body={data?.body} />
       <CommentList id={id} />
-    </article>
+    </Suspense>
   );
 };
